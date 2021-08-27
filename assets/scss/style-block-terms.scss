@@ -1,0 +1,55 @@
+.taro-taxonomy {
+
+	&-list {
+		padding: 0;
+		margin: 40px 0;
+
+		&-hierarchical {
+
+		}
+
+		&-child {
+			margin: 20px 0;
+
+			& & {
+				margin: 0;
+				display: inline-block;
+
+				li:first-child {
+					margin-left: 1em;
+				}
+			}
+		}
+	}
+
+	&-item {
+		list-style: none;
+		display: inline-block;
+		margin: 0 1em 1em 0;
+
+		&-hierarchical {
+
+		}
+
+		&-parent {
+			display: block;
+			margin: 1em 0;
+		}
+
+		&-link {
+			font-size: .85em;
+			display: inline-block;
+			padding: 0.25em 0.5em;
+			border: 1px solid currentColor;
+			border-radius: 1em;
+			text-decoration: none !important;
+
+			&:hover,
+			&:active {
+				background-color: rgba(255, 255, 255, .2);
+			}
+		}
+	}
+}
+
+
