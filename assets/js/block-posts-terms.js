@@ -1,34 +1,22 @@
 /*!
- * iframe block
+ * Post terms block.
  *
- * @handle taro-taxonomy-blocks-editor
- * @deps wp-i18n, wp-components, wp-blocks, wp-block-editor, wp-server-side-render, wp-compose, wp-data
+ * @handle taro-taxonomy-post-blocks-editor
+ * @deps wp-i18n, wp-components, wp-blocks, wp-block-editor, wp-server-side-render, wp-compose, wp-data, taro-taxonomy-selector
  */
 
-/* global TaroTermsBlockEditor:false */
+/* global TaroPostTermsBlockEditor:false */
 
 const { registerBlockType } = wp.blocks;
 const { __ } = wp.i18n;
 const { InspectorControls } = wp.blockEditor;
-const { PanelBody, SelectControl, ToggleControl, TextControl } = wp.components;
+const { PanelBody } = wp.components;
 const { serverSideRender: ServerSideRender } = wp;
-
-const taxonomyOptions = [
-	{
-		label: __( 'Please Select', 'taro-taxonomy-blocks' ),
-		value: '',
-	}
-];
-TaroTermsBlockEditor.taxonomies.forEach( ( taxonomy ) => {
-	taxonomyOptions.push( {
-		label: taxonomy.label,
-		value: taxonomy.name,
-	} );
-} );
+const { TaxonomySelector } = wp.taro;
 
 registerBlockType( 'taro/post-terms', {
 
-	title: __( 'Terms', 'taro-taxonomy-blocks' ),
+	title: __( 'Post Terms', 'taro-taxonomy-blocks' ),
 
 	icon: 'tag',
 
@@ -41,54 +29,23 @@ registerBlockType( 'taro/post-terms', {
 
 	keywords: [ 'term' ],
 
-	attributes: TaroTermsBlockEditor.attributes,
+	attributes: TaroPostTermsBlockEditor.attributes,
 
-	description: __( 'Display terms list in specified taxonomy.', 'taro-taxonomy-blocks' ),
+	description: __( 'Display the list of terms assigned to this post in specified taxonomy.', 'taro-taxonomy-blocks' ),
 
 	edit( { attributes, setAttributes } ) {
 		return (
 			<>
 				<InspectorControls>
 					<PanelBody defaultOpen={ true } title={ __( 'Taxonomy Setting', 'taro-taxonomy-blocks' ) } >
-						<SelectControl label={ __( 'Taxonomy', 'taro-taxonomy-blocks' ) } options={ taxonomyOptions } value={ attributes.taxonomy } onChange={ taxonomy => setAttributes( { taxonomy } ) } />
-						<ToggleControl checked={ attributes.hide_empty } label={ __( 'Hide Empty', 'taro-taxonomy-blocks' ) } onChange={ ( hide_empty ) => setAttributes( { hide_empty } ) } />
-						<hr />
-						<SelectControl label={ __( 'Order By', 'taro-taxonomy-blocks' ) } onChange={ orderby => setAttributes( { orderby } ) }
-							options={ [
-								{
-									label: __( 'Name', 'taro-taxonomy-blocks' ),
-									value: 'name',
-								},
-								{
-									label: __( 'Slug', 'taro-taxonomy-blocks' ),
-									value: 'slug',
-								},
-								{
-									label: __( 'Count', 'taro-taxonomy-blocks' ),
-									value: 'count',
-								},
-							] }
-							help={ __( 'To use custom fields for sort, enter the field name above.', 'taro-taxonomy-blocks' ) }
-						/>
-						<TextControl label={ __( 'Custom Field(optional)', 'taro-taxonomy-blocks' ) } value={ attributes.meta } onChange={ meta => setAttributes( { meta } ) } />
-						<SelectControl label={ __( 'Order', 'taro-taxonomy-blocks' ) } onChange={ order => setAttributes( { order } ) }
-							options={ [
-								{
-									label: __( 'Ascending', 'taro-taxonomy-blocks' ),
-									value: 'ASC',
-								},
-								{
-									label: __( 'Descending', 'taro-taxonomy-blocks' ),
-									value: 'DESC',
-								},
-							] }/>
+						<TaxonomySelector value={ attributes.taxonomy } onChange={ taxonomy => setAttributes( { taxonomy } ) } />
 					</PanelBody>
 				</InspectorControls>
 
 				{ ( ! attributes.taxonomy ) ? (
 					<div style={ { margin: "40px 0" } }>
 						<p>{ __( 'No taxonomy set. Please choose one.', 'taro-taxonomy-' ) }</p>
-						<SelectControl label={ __( 'Taxonomy', 'taro-taxonomy-blocks' ) } options={ taxonomyOptions } value={ attributes.taxonomy } onChange={ taxonomy => setAttributes( { taxonomy } ) } />
+						<TaxonomySelector value={ attributes.taxonomy } onChange={ taxonomy => setAttributes( { taxonomy } ) } />
 					</div>
 				) : (
 					<div className="taro-taxonomy-blocks-editor">
