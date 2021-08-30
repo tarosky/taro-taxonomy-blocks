@@ -52,4 +52,47 @@
 	}
 }
 
+.taro-taxonomy-query {
 
+	&-block {
+		padding: 0;
+		margin: 40px -10px;
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+	&-item {
+		list-style: none;
+		flex: 0 1 33%;
+		padding: 10px;
+
+		@media only screen and ( max-width: 767px ) {
+			flex: 0 1 50%;
+		}
+		@media only screen and ( max-width: 420px ) {
+			flex: 0 1 100%;
+		}
+	}
+
+	&-link {
+		display: block;
+		background-color: rgba(255, 255, 255, .4);
+		padding: 10px;
+		text-decoration: none !important;
+
+		&:hover,
+		&:active {
+			background-color: rgba( 255, 255, 255, .8 );
+		}
+	}
+
+	&-title {
+		display: block;
+		font-weight: 700;
+	}
+
+	&-date {
+		display: block;
+		font-size: 0.8em;
+	}
+}

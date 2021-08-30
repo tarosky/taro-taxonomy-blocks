@@ -91,6 +91,38 @@ const OrderBySelector = ( { value, onChange } ) => {
 	);
 };
 
+/**
+ * Posts order by.
+ *
+ * @param {string}   value
+ * @param {callback} onChange
+ * @returns {JSX.Element}
+ * @constructor
+ * @constructor
+ */
+const PostsOrderBySelector = ( { value, onChange } ) => {
+	return (
+		<SelectControl label={ __( 'Order By', 'taro-taxonomy-blocks' ) } onChange={ orderby => onChange( orderby ) }
+			value={ value }
+			options={ [
+				{
+					label: __( 'Date', 'taro-taxonomy-blocks' ),
+					value: 'date',
+				},
+				{
+					label: __( 'Random', 'taro-taxonomy-blocks' ),
+					value: 'rand',
+				},
+				{
+					label: __( 'Menu Order', 'taro-taxonomy-blocks' ),
+					value: 'menu_order',
+				},
+			] }
+			help={ __( 'To use custom fields for sort, enter the field name above.', 'taro-taxonomy-blocks' ) }
+		/>
+	);
+};
+
 if ( ! wp.taro ) {
 	wp.taro = {};
 }
@@ -98,3 +130,4 @@ if ( ! wp.taro ) {
 wp.taro.TaxonomySelector = TaxonomySelector;
 wp.taro.OrderSelector = OrderSelector;
 wp.taro.OrderBySelector = OrderBySelector;
+wp.taro.PostsOrderBySelector = PostsOrderBySelector;

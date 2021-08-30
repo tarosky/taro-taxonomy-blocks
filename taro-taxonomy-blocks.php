@@ -27,6 +27,7 @@ function taro_taxonomy_blocks_assets() {
 	wp_register_script( 'taro-taxonomy-selector', $base . '/js/taxonomy-selector.js', [ 'wp-i18n', 'wp-components' ], $version, true );
 	wp_register_script( 'taro-terms-block-editor', $base . '/js/block-terms.js', [ 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-block-editor', 'wp-server-side-render', 'taro-taxonomy-selector' ], $version, true );
 	wp_register_script( 'taro-post-terms-block-editor', $base . '/js/block-posts-terms.js', [ 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-block-editor', 'wp-server-side-render', 'taro-taxonomy-selector' ], $version, true );
+	wp_register_script( 'taro-post-terms-query-block-editor', $base . '/js/block-posts-terms-query.js', [ 'wp-i18n', 'wp-data', 'wp-blocks', 'wp-components', 'wp-block-editor', 'wp-server-side-render', 'taro-taxonomy-selector' ], $version, true );
 	wp_register_style( 'taro-terms-block-editor', $base . '/css/editor-block-terms.css', [], $version );
 	wp_register_style( 'taro-post-terms-block-editor', $base . '/css/editor-block-posts-terms.css', [], $version );
 	wp_register_style( 'taro-terms-block', $base . '/css/style-block-terms.css', [], $version );
@@ -40,9 +41,16 @@ function taro_taxonomy_blocks_assets() {
 		'style'           => 'taro-terms-block',
 	] );
 	register_block_type( 'taro/post-terms', [
-		'attributes'      => taro_taxonomy_terms_blocks_option( true ),
+		'attributes'      => taro_taxonomy_terms_blocks_option( 'post_terms' ),
 		'render_callback' => 'taro_taxonomy_blocks_callback_post_terms',
 		'editor_script'   => 'taro-post-terms-block-editor',
+		'editor_style'    => 'taro-terms-block-editor',
+		'style'           => 'taro-terms-block',
+	] );
+	register_block_type( 'taro/post-terms-query', [
+		'attributes'      => taro_taxonomy_terms_blocks_option( 'posts' ),
+		'render_callback' => 'taro_taxonomy_blocks_callback_post_terms_query',
+		'editor_script'   => 'taro-post-terms-query-block-editor',
 		'editor_style'    => 'taro-terms-block-editor',
 		'style'           => 'taro-terms-block',
 	] );
@@ -63,52 +71,83 @@ function taro_taxonomy_blocks_enqueue_editor() {
 	] );
 	wp_set_script_translations( 'taro-post-terms-block-editor', 'taro-taxonomy-blocks' );
 	wp_localize_script( 'taro-post-terms-block-editor', 'TaroPostTermsBlockEditor', [
-		'attributes' => taro_taxonomy_terms_blocks_option( true ),
+		'attributes' => taro_taxonomy_terms_blocks_option( 'post_terms' ),
+	] );
+	wp_set_script_translations( 'taro-post-terms-query-block-editor', 'taro-taxonomy-blocks' );
+	wp_localize_script( 'taro-post-terms-query-block-editor', 'TaroPostTermsQueryBlockEditor', [
+		'attributes' => taro_taxonomy_terms_blocks_option( 'posts' ),
 	] );
 }
 
 /**
  * Option for iframe block.
  *
+ * @param string $target posts, post_terms, terms.
  * @return array[]
  */
-function taro_taxonomy_terms_blocks_option( $is_post = false ) {
+function taro_taxonomy_terms_blocks_option( $target = '' ) {
 	$args = [
 		'taxonomy' => [
 			'type'    => 'string',
 			'default' => '',
 		],
 	];
-	return $is_post ? $args : array_merge( $args, [
-		'ordeby'   => [
-			'type'    => 'string',
-			'default' => 'name',
-		],
-		'order'    => [
-			'type'    => 'string',
-			'default' => 'ASC',
-		],
-		'meta'     => [
-			'type'    => 'string',
-			'default' => '',
-		],
-		'hide_empty' => [
-			'type'    => 'bool',
-			'default' => true,
-		],
-	] );
+	switch ( $target ) {
+		case 'posts':
+			return array_merge( $args, [
+				'post_type' => [
+					'type'    => 'string',
+					'default' => '',
+				],
+				'limit'    => [
+					'type'    => 'number',
+					'default' => (int) apply_filters( 'taro_taxonomy_blocks_posts_per_page', get_option( 'posts_per_page', 10 ) ),
+				],
+				'orderby'   => [
+					'type'    => 'string',
+					'default' => 'date',
+				],
+				'order'    => [
+					'type'    => 'string',
+					'default' => 'DESC',
+				],
+			] );
+		case 'post_terms':
+			return $args;
+		case 'terms':
+		default:
+			return array_merge( $args, [
+				'ordeby'   => [
+					'type'    => 'string',
+					'default' => 'name',
+				],
+				'order'    => [
+					'type'    => 'string',
+					'default' => 'ASC',
+				],
+				'meta'     => [
+					'type'    => 'string',
+					'default' => '',
+				],
+				'hide_empty' => [
+					'type'    => 'bool',
+					'default' => true,
+				],
+			] );
+	}
 }
 
 /**
  * Parse attributes.
  *
  * @param array $attributes REST attributes.
- * @param bool  $is_post    Is post, true.
+ * @param bool  $target     Target.
+ * @see taro_taxonomy_terms_blocks_option()
  * @return array
  */
-function taro_taxonomy_parse_args( $attributes, $is_post = false ) {
+function taro_taxonomy_parse_args( $attributes, $target = '' ) {
 	$default_args = [];
-	foreach ( taro_taxonomy_terms_blocks_option( $is_post ) as $key => $setting ) {
+	foreach ( taro_taxonomy_terms_blocks_option( $target ) as $key => $setting ) {
 		$default_args[ $key ] = $setting['default'];
 	}
 	return wp_parse_args( $attributes, $default_args );
@@ -200,17 +239,75 @@ function taro_taxonomy_blocks_callback_terms( $attributes = [], $content = '' ) 
  */
 function taro_taxonomy_blocks_callback_post_terms( $attributes = [], $content = '' ) {
 	// Create default args.
-	$attributes = taro_taxonomy_parse_args( $attributes );
+	$attributes = taro_taxonomy_parse_args( $attributes, 'post_terms' );
 	$taxonomy = get_taxonomy( $attributes['taxonomy'] );
 	$terms    = get_the_terms( get_the_ID(), $attributes['taxonomy'] );
-	if ( is_wp_error( $terms ) ) {
-		return $terms->get_error_message();
-	}
-	if ( ! $terms ) {
-		return $terms;
+	if ( is_wp_error( $terms ) || $terms ) {
+		return '';
 	}
 	ob_start();
 	taro_taxonomy_blocks_get_template_part( 'template-parts/taxonomy-blocks/term-list', $taxonomy->name, [
+		'terms' => $terms,
+	] );
+	$content = ob_get_contents();
+	ob_end_clean();
+	return $content;
+}
+
+/**
+ * Render dynamic block for posts query.
+ *
+ * @param array  $attributes Options.
+ * @param string $content    Body.
+ *
+ * @return string
+ */
+function taro_taxonomy_blocks_callback_post_terms_query( $attributes = [], $content = '' ) {
+	// Create default args.
+	$attributes = taro_taxonomy_parse_args( $attributes, 'posts' );
+	$taxonomy = get_taxonomy( $attributes['taxonomy'] );
+	// Get assigned terms.
+	$terms    = get_the_terms( get_the_ID(), $attributes['taxonomy'] );
+	if ( is_wp_error( $terms ) || ! $terms ) {
+		return '';
+	}
+	// Posts query.
+	$post_type = trim( $attributes['post_type'] );
+	if ( empty( $attributes['post_type'] ) ) {
+		$post_type = get_post_type();
+	} elseif ( 'any' === $post_type ) {
+		// Do nothing.
+	} else {
+		$post_type = array_map( 'trim', explode( ',', $post_type ) );
+	}
+	$args = [
+		'post_type'      => $post_type,
+		'post_status'    => 'publish',
+		'posts_per_page' => max( -1, (int) $attributes['limit'] ),
+		'tax_query'      => [
+			[
+				'taxonomy' => $taxonomy->name,
+				'field'    => 'term_id',
+				'terms'    => array_map( function( $term ) {
+					return $term->term_id;
+				}, $terms ),
+			],
+		],
+	];
+	if ( 'rand' === $attributes['orderby'] ) {
+		$args['orderby'] = 'rand';
+	} else {
+		$args['orderby'] = $attributes['orderby'];
+		$args['order']   = $attributes['order'];
+	}
+	$args  = apply_filters( 'taro_taxonomy_blocks_posts_query_args', $args, $attributes, $terms, get_post() );
+	$query = new WP_Query( $args );
+	if ( ! $query->have_posts() ) {
+		return '';
+	}
+	ob_start();
+	taro_taxonomy_blocks_get_template_part( 'template-parts/taxonomy-blocks/posts-list', $taxonomy->name, [
+		'query' => $query,
 		'terms' => $terms,
 	] );
 	$content = ob_get_contents();
