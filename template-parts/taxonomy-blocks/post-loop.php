@@ -15,7 +15,7 @@
 		<?php endif; ?>
 		<div class="taro-taxonomy-query-body">
 			<span class="taro-taxonomy-query-title"><?php the_title(); ?></span>
-			<time class="taro-taxonomy-query-date"><?php the_time( get_option( 'date_format' ) ) ?></time>
+			<time class="taro-taxonomy-query-date"><?php the_time( get_option( 'date_format' ) ); ?></time>
 		</div>
 	</a>
 </li>

@@ -35,6 +35,7 @@ registerBlockType( 'taro/post-terms-query', {
 	description: __( 'Display posts with same terms of this post in specified taxonomy.', 'taro-taxonomy-blocks' ),
 
 	edit( { attributes, setAttributes } ) {
+		// translators: %s is post type.
 		const postTypePlaceHolder = sprintf( __( 'Default: %s', 'taro-taxonomy-blocks' ), select( 'core/editor' ).getCurrentPostType() );
 		return (
 			<>
@@ -42,7 +43,7 @@ registerBlockType( 'taro/post-terms-query', {
 					<PanelBody defaultOpen={ true } title={ __( 'Taxonomy Setting', 'taro-taxonomy-blocks' ) } >
 						<TextControl label={ __( 'Post Type', 'taro-taxonomy-blocks' ) } value={ attributes.post_type }
 							placeholder={ postTypePlaceHolder }
-							onChange={ ( post_type ) => setAttributes( { post_type } ) }
+							onChange={ ( postType ) => setAttributes( { post_type: postType } ) }
 							help={ __( 'Enter post types in csv format. "any" is also available. If empty, current post type will be used.', 'taro-taxonomy-blocks' ) }
 						/>
 						<TaxonomySelector value={ attributes.taxonomy } onChange={ taxonomy => setAttributes( { taxonomy } ) } />

@@ -99,7 +99,7 @@ function taro_taxonomy_terms_blocks_option( $target = '' ) {
 					'type'    => 'string',
 					'default' => '',
 				],
-				'limit'    => [
+				'limit'     => [
 					'type'    => 'number',
 					'default' => (int) apply_filters( 'taro_taxonomy_blocks_posts_per_page', get_option( 'posts_per_page', 10 ) ),
 				],
@@ -107,7 +107,7 @@ function taro_taxonomy_terms_blocks_option( $target = '' ) {
 					'type'    => 'string',
 					'default' => 'date',
 				],
-				'order'    => [
+				'order'     => [
 					'type'    => 'string',
 					'default' => 'DESC',
 				],
@@ -117,15 +117,15 @@ function taro_taxonomy_terms_blocks_option( $target = '' ) {
 		case 'terms':
 		default:
 			return array_merge( $args, [
-				'ordeby'   => [
+				'ordeby'     => [
 					'type'    => 'string',
 					'default' => 'name',
 				],
-				'order'    => [
+				'order'      => [
 					'type'    => 'string',
 					'default' => 'ASC',
 				],
-				'meta'     => [
+				'meta'       => [
 					'type'    => 'string',
 					'default' => '',
 				],
@@ -166,7 +166,7 @@ function taro_taxonomy_blocks_get_template_part( $name, $suffix = '', $args = []
 		$dirs[] = get_template_directory();
 	}
 	$dirs[] = __DIR__;
-	$files = [ $name .'.php' ];
+	$files  = [ $name . '.php' ];
 	if ( $suffix ) {
 		array_unshift( $files, $name . '-' . $suffix . '.php' );
 	}
@@ -197,18 +197,18 @@ function taro_taxonomy_blocks_get_template_part( $name, $suffix = '', $args = []
 function taro_taxonomy_blocks_callback_terms( $attributes = [], $content = '' ) {
 	// Create default args.
 	$attributes = taro_taxonomy_parse_args( $attributes );
-	$term_args = [
+	$term_args  = [
 		'taxonomy'   => $attributes['taxonomy'],
 		'hide_empty' => $attributes['hide_empty'],
 	];
 	if ( $attributes['meta'] ) {
 		$term_args['meta_key'] = $attributes['meta'];
-		$term_args['ordeby']  = 'meta_value';
+		$term_args['ordeby']   = 'meta_value';
 	} else {
 		$term_args['ordeby'] = $attributes['ordeby'];
 	}
 	$term_args['order'] = $attributes['order'];
-	$terms = get_terms( $term_args );
+	$terms              = get_terms( $term_args );
 	if ( ! $terms || is_wp_error( $terms ) ) {
 		return '';
 	}
@@ -240,8 +240,8 @@ function taro_taxonomy_blocks_callback_terms( $attributes = [], $content = '' ) 
 function taro_taxonomy_blocks_callback_post_terms( $attributes = [], $content = '' ) {
 	// Create default args.
 	$attributes = taro_taxonomy_parse_args( $attributes, 'post_terms' );
-	$taxonomy = get_taxonomy( $attributes['taxonomy'] );
-	$terms    = get_the_terms( get_the_ID(), $attributes['taxonomy'] );
+	$taxonomy   = get_taxonomy( $attributes['taxonomy'] );
+	$terms      = get_the_terms( get_the_ID(), $attributes['taxonomy'] );
 	if ( is_wp_error( $terms ) || $terms ) {
 		return '';
 	}
@@ -265,9 +265,9 @@ function taro_taxonomy_blocks_callback_post_terms( $attributes = [], $content = 
 function taro_taxonomy_blocks_callback_post_terms_query( $attributes = [], $content = '' ) {
 	// Create default args.
 	$attributes = taro_taxonomy_parse_args( $attributes, 'posts' );
-	$taxonomy = get_taxonomy( $attributes['taxonomy'] );
+	$taxonomy   = get_taxonomy( $attributes['taxonomy'] );
 	// Get assigned terms.
-	$terms    = get_the_terms( get_the_ID(), $attributes['taxonomy'] );
+	$terms = get_the_terms( get_the_ID(), $attributes['taxonomy'] );
 	if ( is_wp_error( $terms ) || ! $terms ) {
 		return '';
 	}

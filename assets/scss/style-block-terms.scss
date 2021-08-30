@@ -4,10 +4,6 @@
 		padding: 0;
 		margin: 40px 0;
 
-		&-hierarchical {
-
-		}
-
 		&-child {
 			margin: 20px 0;
 
@@ -26,10 +22,6 @@
 		list-style: none;
 		display: inline-block;
 		margin: 0 1em 1em 0;
-
-		&-hierarchical {
-
-		}
 
 		&-parent {
 			display: block;
@@ -82,7 +74,7 @@
 
 		&:hover,
 		&:active {
-			background-color: rgba( 255, 255, 255, .8 );
+			background-color: rgba(255, 255, 255, .8);
 		}
 	}
 

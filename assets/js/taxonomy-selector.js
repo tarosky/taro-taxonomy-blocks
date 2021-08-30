@@ -21,28 +21,12 @@ TaroTaxonomySelector.taxonomies.forEach( ( taxonomy ) => {
 	} );
 } );
 
-/**
- * Taxonomy Selector.
- *
- * @param {string}   value
- * @param {callback} onChange
- * @returns {JSX.Element}
- * @constructor
- */
 const TaxonomySelector = ( { value, onChange } ) => {
 	return (
 		<SelectControl label={ __( 'Taxonomy', 'taro-taxonomy-blocks' ) } options={ taxonomyOptions } value={ value } onChange={ taxonomy => onChange( taxonomy ) } />
 	);
 };
 
-/**
- * Order Selector.
- *
- * @param {string}   value
- * @param {callback} onChange
- * @returns {JSX.Element}
- * @constructor
- */
 const OrderSelector = ( { value, onChange } ) => {
 	return (
 		<SelectControl label={ __( 'Order', 'taro-taxonomy-blocks' ) } onChange={ order => onChange( order ) }
@@ -60,14 +44,6 @@ const OrderSelector = ( { value, onChange } ) => {
 	);
 };
 
-/**
- * Order By Selector.
- *
- * @param {string}   value
- * @param {callback} onChange
- * @returns {JSX.Element}
- * @constructor
- */
 const OrderBySelector = ( { value, onChange } ) => {
 	return (
 		<SelectControl label={ __( 'Order By', 'taro-taxonomy-blocks' ) } onChange={ orderby => onChange( orderby ) }
@@ -91,15 +67,6 @@ const OrderBySelector = ( { value, onChange } ) => {
 	);
 };
 
-/**
- * Posts order by.
- *
- * @param {string}   value
- * @param {callback} onChange
- * @returns {JSX.Element}
- * @constructor
- * @constructor
- */
 const PostsOrderBySelector = ( { value, onChange } ) => {
 	return (
 		<SelectControl label={ __( 'Order By', 'taro-taxonomy-blocks' ) } onChange={ orderby => onChange( orderby ) }
