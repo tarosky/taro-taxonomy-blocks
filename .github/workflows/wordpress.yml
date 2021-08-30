@@ -47,6 +47,15 @@ jobs:
       - name: Install WordPress
         run: bash bin/install-wp-tests.sh wordpress root root 127.0.0.1:3306 ${{ matrix.wp }}
 
+      - name: Check PHP syntax
+        run: composer test
+
+  assets:
+    name: Assets Test
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@master
+
       - name: Install Node
         uses: actions/setup-node@v1
         with:
@@ -55,15 +64,14 @@ jobs:
       - name: Install NPM Packages
         run: npm install
 
-      - name: Check PHP syntax
-        run: composer test
-
       - name: Check JS & CSS syntax
         run: npm run lint
 
+
+
   release:
     name: Deploy WordPress.org
-    needs: test
+    needs: [ test, assets ]
     if: contains(github.ref, 'tags/')
     runs-on: ubuntu-18.04
     steps:
