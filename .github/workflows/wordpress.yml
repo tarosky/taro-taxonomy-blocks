@@ -87,7 +87,7 @@ jobs:
         run: bash bin/clean.sh
 
       - name: Create Zip
-        run: zip -r ${{ github.event.repository.name }.zip ./
+        run: zip -r ${{ github.event.repository.name }}.zip ./
 
 
       - name: Create Release
