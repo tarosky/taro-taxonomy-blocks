@@ -9,11 +9,48 @@ Stable Tag: nightly
 License: GPLv3 or later  
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 
-Add 2 term blocks.
+Add 3 term blocks.
 
 ## Description
 
-W.I.P.
+This plugin supports 3 term blocks.
+
+1. **Terms Block** - Display all terms in the specified taxonomy. Usefull to display terms list like glossary.
+2. **Post's Terms Block** - Display terms assigned to the post in the specified taxonomy.
+3. **Post's Terms Query Block** - Display post list with same terms with the post.
+
+### Customization
+
+#### Template Structure
+
+To override look and feel, put template in your themes directory.
+
+```
+template-parts
+- taxonomy-blocks
+  - posts-list.php             // List of post in post's terms query blocks. 
+  - post-loop.php              // Post link in post's terms query blocks. 
+  - term-item.php              // Term link.
+  - term-list.php              // Flat term list.
+  - term-list-hierarchical.php // Hierarchical terms list.
+```
+
+`taro_taxonomy_blocks_template` filter hook is also available.
+This will override the template file path.
+
+#### Styles
+
+To override styles, regsiter styels named `taro-terms-block`.
+The plugin registers style at priority 20 of `init` hook, so registering style at priority 10.
+
+```
+add_action( 'init', function() {
+    // Your own CSS.
+    wp_register_style( 'taro-terms-block', $your_block_css_url, $deps, $version );
+} );
+```
+
+Now your blocks will be styled by your CSS.
 
 ## Installation
 
