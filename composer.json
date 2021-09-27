@@ -1,6 +1,6 @@
 {
 	"name": "tarosky/taro-taxonomy-blocks",
-	"description": "WordPress plguin for taxonomy blocks.",
+	"description": "WordPress plugin for taxonomy blocks.",
 	"minimum-stability": "stable",
 	"license": "GPL-3.0-or-later",
 	"scripts": {
