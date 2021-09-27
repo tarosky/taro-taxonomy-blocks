@@ -242,7 +242,7 @@ function taro_taxonomy_blocks_callback_post_terms( $attributes = [], $content = 
 	$attributes = taro_taxonomy_parse_args( $attributes, 'post_terms' );
 	$taxonomy   = get_taxonomy( $attributes['taxonomy'] );
 	$terms      = get_the_terms( get_the_ID(), $attributes['taxonomy'] );
-	if ( is_wp_error( $terms ) || $terms ) {
+	if ( is_wp_error( $terms ) || ! $terms ) {
 		return '';
 	}
 	ob_start();
