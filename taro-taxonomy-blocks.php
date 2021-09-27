@@ -2,7 +2,7 @@
 /**
 Plugin Name: Taro Taxonomy Blocks
 Plugin URI: https://wordpress.org/plugins/taro-taxonomy-blocks/
-Description: Add iframe block for block editor.
+Description: Add 3 taxonomy blockshh for block editor.
 Author: Tarosky INC.
 Version: nightly
 Author URI: https://tarosky.co.jp/
