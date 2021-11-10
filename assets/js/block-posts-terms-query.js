@@ -5,7 +5,7 @@
  * @deps wp-i18n, wp-data, wp-components, wp-blocks, wp-block-editor, wp-server-side-render, wp-compose, wp-data, taro-taxonomy-selector
  */
 
-/* global TaroPostTermsBlockEditor:false */
+/* global TaroPostTermsQueryBlockEditor:false */
 
 const { registerBlockType } = wp.blocks;
 const { __, sprintf } = wp.i18n;
@@ -30,7 +30,7 @@ registerBlockType( 'taro/post-terms-query', {
 
 	keywords: [ 'term' ],
 
-	attributes: TaroPostTermsBlockEditor.attributes,
+	attributes: TaroPostTermsQueryBlockEditor.attributes,
 
 	description: __( 'Display posts with same terms of this post in specified taxonomy.', 'taro-taxonomy-blocks' ),
 
