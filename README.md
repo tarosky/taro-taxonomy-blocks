@@ -74,6 +74,9 @@ Create a new [issue](https://github.com/tarosky/taro-taxonomy-blocks/issues) or 
 
 ## Changelog
 
+### 1.1.0
+
+* Post terms query block accepts manually input term list.
 
 ### 1.0.0
 

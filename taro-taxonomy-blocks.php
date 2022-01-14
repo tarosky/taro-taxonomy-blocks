@@ -99,6 +99,10 @@ function taro_taxonomy_terms_blocks_option( $target = '' ) {
 					'type'    => 'string',
 					'default' => '',
 				],
+				'terms'     => [
+					'type'    => 'string',
+					'default' => '',
+				],
 				'limit'     => [
 					'type'    => 'number',
 					'default' => (int) apply_filters( 'taro_taxonomy_blocks_posts_per_page', get_option( 'posts_per_page', 10 ) ),
@@ -267,7 +271,15 @@ function taro_taxonomy_blocks_callback_post_terms_query( $attributes = [], $cont
 	$attributes = taro_taxonomy_parse_args( $attributes, 'posts' );
 	$taxonomy   = get_taxonomy( $attributes['taxonomy'] );
 	// Get assigned terms.
-	$terms = get_the_terms( get_the_ID(), $attributes['taxonomy'] );
+	if ( ! empty( $attributes['terms'] ) ) {
+		$terms = get_terms( [
+			'taxonomy'   => $attributes['taxonomy'],
+			'slug'       => array_map( 'trim', explode( ',', $attributes['terms'] ) ),
+			'hide_empty' => false,
+		] );
+	} else {
+		$terms = get_the_terms( get_the_ID(), $attributes['taxonomy'] );
+	}
 	if ( is_wp_error( $terms ) || ! $terms ) {
 		return '';
 	}
