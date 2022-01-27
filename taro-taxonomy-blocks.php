@@ -60,7 +60,7 @@ function taro_taxonomy_blocks_assets() {
  * Enqueue assets for editor.
  */
 function taro_taxonomy_blocks_enqueue_editor() {
-	$tax_args = apply_filters( 'taro_taxonomy_blocks_taxonomy_args', [
+	$tax_args   = apply_filters( 'taro_taxonomy_blocks_taxonomy_args', [
 		'public' => true,
 	] );
 	$taxonomies = apply_filters( 'taro_taxonomy_blocks_taxonomies', array_values( get_taxonomies( $tax_args, OBJECT ) ) );

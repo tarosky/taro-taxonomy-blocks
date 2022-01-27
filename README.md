@@ -74,6 +74,10 @@ Create a new [issue](https://github.com/tarosky/taro-taxonomy-blocks/issues) or 
 
 ## Changelog
 
+### 1.1.2
+
+* Add filter for taxonomies list in selector.
+
 ### 1.1.0
 
 * Post terms query block accepts manually input term list.
