@@ -89,7 +89,7 @@ function taro_taxonomy_blocks_enqueue_editor() {
  */
 function taro_taxonomy_terms_blocks_option( $target = '' ) {
 	$args = [
-		'taxonomy' => [
+		'taxonomy'  => [
 			'type'    => 'string',
 			'default' => '',
 		],
