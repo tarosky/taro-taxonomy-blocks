@@ -89,7 +89,11 @@ function taro_taxonomy_blocks_enqueue_editor() {
  */
 function taro_taxonomy_terms_blocks_option( $target = '' ) {
 	$args = [
-		'taxonomy' => [
+		'taxonomy'  => [
+			'type'    => 'string',
+			'default' => '',
+		],
+		'className' => [
 			'type'    => 'string',
 			'default' => '',
 		],
@@ -222,12 +226,14 @@ function taro_taxonomy_blocks_callback_terms( $attributes = [], $content = '' ) 
 	ob_start();
 	if ( $taxonomy->hierarchical ) {
 		taro_taxonomy_blocks_get_template_part( 'template-parts/taxonomy-blocks/term-list-hierarchical', $taxonomy->name, [
-			'terms'  => $terms,
-			'parent' => 0,
+			'terms'     => $terms,
+			'parent'    => 0,
+			'className' => $attributes['className'],
 		] );
 	} else {
 		taro_taxonomy_blocks_get_template_part( 'template-parts/taxonomy-blocks/term-list', $taxonomy->name, [
-			'terms' => $terms,
+			'terms'     => $terms,
+			'className' => $attributes['className'],
 		] );
 	}
 	$content = ob_get_contents();

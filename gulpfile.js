@@ -1,32 +1,28 @@
 const gulp = require( 'gulp' );
-const fs = require( 'fs' );
 const $ = require( 'gulp-load-plugins' )();
 const webpack = require( 'webpack-stream' );
 const webpackBundle = require( 'webpack' );
 const named = require( 'vinyl-named' );
+const sass = require( 'gulp-sass' )( require( 'sass' ) );
+
 
 let plumber = true;
 
 // Sassのタスク
 gulp.task( 'sass', function () {
-
 	return gulp.src( [ './assets/scss/**/*.scss' ] )
 		.pipe( $.plumber( {
 			errorHandler: $.notify.onError( '<%= error.message %>' )
 		} ) )
-		.pipe( $.sassGlob() )
 		.pipe( $.sourcemaps.init() )
-		.pipe( $.sass( {
+		.pipe( sass( {
 			errLogToConsole: true,
 			outputStyle: 'compressed',
 			sourceComments: false,
 			sourcemap: true,
 			includePaths: [
 				'./assets/sass',
-				'./vendor',
-				'./node_modules/bootstrap-sass/assets/stylesheets',
-				'./vendor/hametuha'
-			]
+			],
 		} ) )
 		.pipe( $.autoprefixer() )
 		.pipe( $.sourcemaps.write( './map' ) )

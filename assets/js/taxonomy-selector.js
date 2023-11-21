@@ -11,7 +11,7 @@ const taxonomyOptions = [
 	{
 		label: __( 'Please Select', 'taro-taxonomy-blocks' ),
 		value: '',
-	}
+	},
 ];
 
 TaroTaxonomySelector.taxonomies.forEach( ( taxonomy ) => {
@@ -23,13 +23,13 @@ TaroTaxonomySelector.taxonomies.forEach( ( taxonomy ) => {
 
 const TaxonomySelector = ( { value, onChange } ) => {
 	return (
-		<SelectControl label={ __( 'Taxonomy', 'taro-taxonomy-blocks' ) } options={ taxonomyOptions } value={ value } onChange={ taxonomy => onChange( taxonomy ) } />
+		<SelectControl label={ __( 'Taxonomy', 'taro-taxonomy-blocks' ) } options={ taxonomyOptions } value={ value } onChange={ ( taxonomy ) => onChange( taxonomy ) } />
 	);
 };
 
 const OrderSelector = ( { value, onChange } ) => {
 	return (
-		<SelectControl label={ __( 'Order', 'taro-taxonomy-blocks' ) } onChange={ order => onChange( order ) }
+		<SelectControl label={ __( 'Order', 'taro-taxonomy-blocks' ) } onChange={ ( order ) => onChange( order ) }
 			value={ value }
 			options={ [
 				{
@@ -40,13 +40,13 @@ const OrderSelector = ( { value, onChange } ) => {
 					label: __( 'Descending', 'taro-taxonomy-blocks' ),
 					value: 'DESC',
 				},
-			] }/>
+			] } />
 	);
 };
 
 const OrderBySelector = ( { value, onChange } ) => {
 	return (
-		<SelectControl label={ __( 'Order By', 'taro-taxonomy-blocks' ) } onChange={ orderby => onChange( orderby ) }
+		<SelectControl label={ __( 'Order By', 'taro-taxonomy-blocks' ) } onChange={ ( orderby ) => onChange( orderby ) }
 			value={ value }
 			options={ [
 				{
@@ -69,7 +69,7 @@ const OrderBySelector = ( { value, onChange } ) => {
 
 const PostsOrderBySelector = ( { value, onChange } ) => {
 	return (
-		<SelectControl label={ __( 'Order By', 'taro-taxonomy-blocks' ) } onChange={ orderby => onChange( orderby ) }
+		<SelectControl label={ __( 'Order By', 'taro-taxonomy-blocks' ) } onChange={ ( orderby ) => onChange( orderby ) }
 			value={ value }
 			options={ [
 				{

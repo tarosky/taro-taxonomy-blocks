@@ -3,7 +3,7 @@
  * Get tem list.
  *
  * @package taro-taxonomy-blocks
- * @var array{ parent: int, terms: WP_Term[] } $args
+ * @var array{ parent: int, terms: WP_Term[], className: string } $args
  */
 
 $parent = empty( $args['parent'] ) ? 0 : $args['parent'];
@@ -17,6 +17,9 @@ if ( ! $terms ) {
 
 $list_classes   = [ 'taro-taxonomy-list', 'taro-taxonomy-list-hierarchical' ];
 $list_classes[] = $parent ? 'taro-taxonomy-list-child' : 'taro-taxonomy-list-parent';
+if ( $args['className'] ) {
+	$list_classes[] = $args['className'];
+}
 ?>
 
 <ul class="<?php echo esc_attr( implode( ' ', $list_classes ) ); ?>">

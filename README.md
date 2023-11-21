@@ -2,9 +2,9 @@
 
 Tags: gutenberg, block editor, iframe  
 Contributors: tarosky, Takahashi_Fumiki  
-Tested up to: 5.8  
-Requires at least: 5.4  
-Requires PHP: 5.6  
+Tested up to: 6.4  
+Requires at least: 5.9  
+Requires PHP: 7.2  
 Stable Tag: nightly  
 License: GPLv3 or later  
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
@@ -73,6 +73,11 @@ Please create new ticket on support forum.
 Create a new [issue](https://github.com/tarosky/taro-taxonomy-blocks/issues) or send [pull requests](https://github.com/tarosky/taro-taxonomy-blocks/pulls).
 
 ## Changelog
+
+### 1.2.0
+
+* Drop support under PHP 7.2
+* Add support for advanced class setting in the editor.
 
 ### 1.1.2
 
