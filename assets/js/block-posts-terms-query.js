@@ -46,11 +46,11 @@ registerBlockType( 'taro/post-terms-query', {
 							onChange={ ( postType ) => setAttributes( { post_type: postType } ) }
 							help={ __( 'Enter post types in csv format. "any" is also available. If empty, current post type will be used.', 'taro-taxonomy-blocks' ) }
 						/>
-						<TaxonomySelector value={ attributes.taxonomy } onChange={ taxonomy => setAttributes( { taxonomy } ) } />
+						<TaxonomySelector value={ attributes.taxonomy } onChange={ ( taxonomy ) => setAttributes( { taxonomy } ) } />
 						<TextControl value={ attributes.terms } label={ __( 'Term Slugs', 'label' ) }
 							help={ __( 'Enter term slugs in CSV format. Default value is post\'s terms', 'taro-taxonomy-blocks' ) }
 							placeholder={ __( 'Post\'s terms.', 'taro-taxonomy-blocks' ) }
-							onChange={ ( terms ) => setAttributes( { terms } ) }/>
+							onChange={ ( terms ) => setAttributes( { terms } ) } />
 						<TextControl label={ __( 'Number of Posts', 'taro-taxonomy-blocks' ) } type="number" min={ -1 }
 							value={ attributes.limit }
 							placeholder={ 10 }
@@ -62,9 +62,9 @@ registerBlockType( 'taro/post-terms-query', {
 				</InspectorControls>
 
 				{ ( ! attributes.taxonomy ) ? (
-					<div style={ { margin: "40px 0" } }>
+					<div style={ { margin: '40px 0' } }>
 						<p>{ __( 'No taxonomy set. Please choose one.', 'taro-taxonomy-' ) }</p>
-						<TaxonomySelector value={ attributes.taxonomy } onChange={ taxonomy => setAttributes( { taxonomy } ) } />
+						<TaxonomySelector value={ attributes.taxonomy } onChange={ ( taxonomy ) => setAttributes( { taxonomy } ) } />
 					</div>
 				) : (
 					<div className="taro-taxonomy-blocks-editor">

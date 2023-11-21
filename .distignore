@@ -6,6 +6,7 @@
 .github
 .gitignore
 .node-version
+.npmrc
 .stylelintrc.json
 .wordpress-org
 .wp-env.json

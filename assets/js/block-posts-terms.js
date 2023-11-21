@@ -38,14 +38,14 @@ registerBlockType( 'taro/post-terms', {
 			<>
 				<InspectorControls>
 					<PanelBody defaultOpen={ true } title={ __( 'Taxonomy Setting', 'taro-taxonomy-blocks' ) } >
-						<TaxonomySelector value={ attributes.taxonomy } onChange={ taxonomy => setAttributes( { taxonomy } ) } />
+						<TaxonomySelector value={ attributes.taxonomy } onChange={ ( taxonomy ) => setAttributes( { taxonomy } ) } />
 					</PanelBody>
 				</InspectorControls>
 
 				{ ( ! attributes.taxonomy ) ? (
-					<div style={ { margin: "40px 0" } }>
+					<div style={ { margin: '40px 0' } }>
 						<p>{ __( 'No taxonomy set. Please choose one.', 'taro-taxonomy-' ) }</p>
-						<TaxonomySelector value={ attributes.taxonomy } onChange={ taxonomy => setAttributes( { taxonomy } ) } />
+						<TaxonomySelector value={ attributes.taxonomy } onChange={ ( taxonomy ) => setAttributes( { taxonomy } ) } />
 					</div>
 				) : (
 					<div className="taro-taxonomy-blocks-editor">

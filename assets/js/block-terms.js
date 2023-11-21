@@ -36,25 +36,25 @@ registerBlockType( 'taro/terms', {
 			<>
 				<InspectorControls>
 					<PanelBody defaultOpen={ true } title={ __( 'Taxonomy Setting', 'taro-taxonomy-blocks' ) } >
-						<TaxonomySelector value={ attributes.taxonomy } onChange={ taxonomy => setAttributes( { taxonomy } ) } />
+						<TaxonomySelector value={ attributes.taxonomy } onChange={ ( taxonomy ) => setAttributes( { taxonomy } ) } />
 						<ToggleControl checked={ attributes.hide_empty } label={ __( 'Hide Empty', 'taro-taxonomy-blocks' ) } onChange={ ( hideEmpty ) => setAttributes( { hide_empty: hideEmpty } ) } />
 						<hr />
 						<OrderBySelector value={ attributes.orderby } onChange={ ( orderby ) => setAttributes( { orderby } ) } />
-						<TextControl label={ __( 'Custom Field(optional)', 'taro-taxonomy-blocks' ) } value={ attributes.meta } onChange={ meta => setAttributes( { meta } ) } />
+						<TextControl label={ __( 'Custom Field(optional)', 'taro-taxonomy-blocks' ) } value={ attributes.meta } onChange={ ( meta ) => setAttributes( { meta } ) } />
 						<OrderSelector value={ attributes.order } onChange={ ( order ) => setAttributes( { order } ) } />
 					</PanelBody>
 				</InspectorControls>
 
-					{ ( ! attributes.taxonomy ) ? (
-						<div style={ { margin: "40px 0" } }>
-							<p>{ __( 'No taxonomy set. Please choose one.', 'taro-taxonomy-' ) }</p>
-							<TaxonomySelector value={ attributes.taxonomy } onChange={ taxonomy => setAttributes( { taxonomy } ) } />
-						</div>
-					) : (
-						<div className="taro-taxonomy-blocks-editor">
-							<ServerSideRender block="taro/terms" attributes={ attributes } />
-						</div>
-					) }
+				{ ( ! attributes.taxonomy ) ? (
+					<div style={ { margin: '40px 0' } }>
+						<p>{ __( 'No taxonomy set. Please choose one.', 'taro-taxonomy-' ) }</p>
+						<TaxonomySelector value={ attributes.taxonomy } onChange={ ( taxonomy ) => setAttributes( { taxonomy } ) } />
+					</div>
+				) : (
+					<div className="taro-taxonomy-blocks-editor">
+						<ServerSideRender block="taro/terms" attributes={ attributes } />
+					</div>
+				) }
 			</>
 		);
 	},
