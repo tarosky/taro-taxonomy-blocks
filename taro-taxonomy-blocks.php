@@ -309,7 +309,7 @@ function taro_taxonomy_blocks_callback_post_terms_query( $attributes = [], $cont
 			[
 				'taxonomy' => $taxonomy->name,
 				'field'    => 'term_id',
-				'terms'    => array_map( function( $term ) {
+				'terms'    => array_map( function ( $term ) {
 					return $term->term_id;
 				}, $terms ),
 			],
