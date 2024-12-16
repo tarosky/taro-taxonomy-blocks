@@ -47,7 +47,7 @@ registerBlockType( 'taro/terms', {
 
 				{ ( ! attributes.taxonomy ) ? (
 					<div style={ { margin: '40px 0' } }>
-						<p>{ __( 'No taxonomy set. Please choose one.', 'taro-taxonomy-' ) }</p>
+						<p>{ __( 'No taxonomy set. Please choose one.', 'taro-taxonomy-blocks' ) }</p>
 						<TaxonomySelector value={ attributes.taxonomy } onChange={ ( taxonomy ) => setAttributes( { taxonomy } ) } />
 					</div>
 				) : (

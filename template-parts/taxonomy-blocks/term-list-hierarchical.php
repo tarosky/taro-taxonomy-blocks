@@ -7,7 +7,7 @@
  */
 
 $parent = empty( $args['parent'] ) ? 0 : $args['parent'];
-$terms  = array_values( array_filter( $args['terms'], function( $term ) use ( $parent ) {
+$terms  = array_values( array_filter( $args['terms'], function ( $term ) use ( $parent ) {
 	return (int) $parent === (int) $term->parent;
 } ) );
 if ( ! $terms ) {

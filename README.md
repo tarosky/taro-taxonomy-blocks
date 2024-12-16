@@ -74,6 +74,10 @@ Create a new [issue](https://github.com/tarosky/taro-taxonomy-blocks/issues) or 
 
 ## Changelog
 
+### 1.2.1
+
+* Fix translations.
+
 ### 1.2.0
 
 * Drop support under PHP 7.2
