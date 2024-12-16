@@ -47,7 +47,7 @@ registerBlockType( 'taro/post-terms-query', {
 							help={ __( 'Enter post types in csv format. "any" is also available. If empty, current post type will be used.', 'taro-taxonomy-blocks' ) }
 						/>
 						<TaxonomySelector value={ attributes.taxonomy } onChange={ ( taxonomy ) => setAttributes( { taxonomy } ) } />
-						<TextControl value={ attributes.terms } label={ __( 'Term Slugs', 'label' ) }
+						<TextControl value={ attributes.terms } label={ __( 'Term Slugs', 'taro-taxonomy-blocks' ) }
 							help={ __( 'Enter term slugs in CSV format. Default value is post\'s terms', 'taro-taxonomy-blocks' ) }
 							placeholder={ __( 'Post\'s terms.', 'taro-taxonomy-blocks' ) }
 							onChange={ ( terms ) => setAttributes( { terms } ) } />
@@ -63,7 +63,7 @@ registerBlockType( 'taro/post-terms-query', {
 
 				{ ( ! attributes.taxonomy ) ? (
 					<div style={ { margin: '40px 0' } }>
-						<p>{ __( 'No taxonomy set. Please choose one.', 'taro-taxonomy-' ) }</p>
+						<p>{ __( 'No taxonomy set. Please choose one.', 'taro-taxonomy-blocks' ) }</p>
 						<TaxonomySelector value={ attributes.taxonomy } onChange={ ( taxonomy ) => setAttributes( { taxonomy } ) } />
 					</div>
 				) : (

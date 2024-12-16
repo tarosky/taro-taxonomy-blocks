@@ -64,6 +64,7 @@ function taro_taxonomy_blocks_enqueue_editor() {
 		'public' => true,
 	] );
 	$taxonomies = apply_filters( 'taro_taxonomy_blocks_taxonomies', array_values( get_taxonomies( $tax_args, OBJECT ) ) );
+	wp_set_script_translations( 'taro-taxonomy-selector', 'taro-taxonomy-blocks' );
 	wp_localize_script( 'taro-taxonomy-selector', 'TaroTaxonomySelector', [
 		'taxonomies' => $taxonomies,
 	] );
