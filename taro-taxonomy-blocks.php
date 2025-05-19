@@ -1,15 +1,17 @@
 <?php
 /**
-Plugin Name: Taro Taxonomy Blocks
-Plugin URI: https://wordpress.org/plugins/taro-taxonomy-blocks/
-Description: Add 3 taxonomy blockshh for block editor.
-Author: Tarosky INC.
-Version: nightly
-Author URI: https://tarosky.co.jp/
-License: GPL3 or later
-License URI: https://www.gnu.org/licenses/gpl-3.0.html
-Text Domain: taro-taxonomy-blocks
-Domain Path: /languages
+ * Plugin Name: Taro Taxonomy Blocks
+ * Plugin URI: https://wordpress.org/plugins/taro-taxonomy-blocks/
+ * Description: Add 3 taxonomy blockshh for block editor.
+ * Author: Tarosky INC.
+ * Version: nightly
+ * Requires at least: 5.9
+ * Requires PHP: 7.2
+ * Author URI: https://tarosky.co.jp/
+ * License: GPL3 or later
+ * License URI: https://www.gnu.org/licenses/gpl-3.0.html
+ * Text Domain: taro-taxonomy-blocks
+ * Domain Path: /languages
  */
 
 defined( 'ABSPATH' ) or die();
