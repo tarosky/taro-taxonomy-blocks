@@ -130,7 +130,7 @@ function taro_taxonomy_terms_blocks_option( $target = '' ) {
 		case 'terms':
 		default:
 			return array_merge( $args, [
-				'orderby'     => [
+				'orderby'    => [
 					'type'    => 'string',
 					'default' => 'name',
 				],
@@ -216,7 +216,7 @@ function taro_taxonomy_blocks_callback_terms( $attributes = [], $content = '' ) 
 	];
 	if ( $attributes['meta'] ) {
 		$term_args['meta_key'] = $attributes['meta'];
-		$term_args['orderby']   = 'meta_value';
+		$term_args['orderby']  = 'meta_value';
 	} else {
 		$term_args['orderby'] = $attributes['orderby'];
 	}
