@@ -1,13 +1,13 @@
 # Taro Taxonomy Blocks
 
 Tags: gutenberg, block editor, iframe  
-Contributors: tarosky, Takahashi_Fumiki  
-Tested up to: 6.8
+Contributors: tarosky, Takahashi_Fumiki, tswallie  
+Tested up to: 6.8  
 Stable Tag: nightly  
 License: GPLv3 or later  
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 
-Add 3 term blocks.
+Add term-related blocks. Suitable for classic or hybrid themes.
 
 ## Description
 
@@ -19,19 +19,22 @@ This plugin supports 3 term blocks.
 
 ### Customization
 
+All blocks are customizable on the PHP layer.
+
 #### Template Structure
 
-To override look and feel, put template in your themes directory.
+To override look and feel, put template files in your theme's directory.
 
-```
-template-parts
-- taxonomy-blocks
-  - posts-list.php             // List of post in post's terms query blocks. 
-  - post-loop.php              // Post link in post's terms query blocks. 
-  - term-item.php              // Term link.
-  - term-list.php              // Flat term list.
-  - term-list-hierarchical.php // Hierarchical terms list.
-```
+<pre>
+your-theme-dir
+- template-parts
+  - taxonomy-blocks
+    - posts-list.php             // List of post in post's terms query blocks. 
+    - post-loop.php              // Post link in post's terms query blocks. 
+    - term-item.php              // Term link.
+    - term-list.php              // Flat term list.
+    - term-list-hierarchical.php // Hierarchical terms list.
+</pre>
 
 `taro_taxonomy_blocks_template` filter hook is also available.
 This will override the template file path.
@@ -39,7 +42,7 @@ This will override the template file path.
 #### Styles
 
 To override styles, regsiter styels named `taro-terms-block`.
-The plugin registers style at priority 20 of `init` hook, so registering style at priority 10.
+The plugin registers style at priority 20 of `init` hook, so registering style at priority 10 or earlier.
 
 ```
 add_action( 'init', function() {
@@ -71,6 +74,11 @@ Please create new ticket on support forum.
 Create a new [issue](https://github.com/tarosky/taro-taxonomy-blocks/issues) or send [pull requests](https://github.com/tarosky/taro-taxonomy-blocks/pulls).
 
 ## Changelog
+
+### 1.2.2
+
+* Check compatibility to WordPress 6.8
+* Fix order bug in term posts block.
 
 ### 1.2.1
 
