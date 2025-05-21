@@ -7,7 +7,7 @@ Stable Tag: nightly
 License: GPLv3 or later  
 License URI: http://www.gnu.org/licenses/gpl-3.0.txt
 
-Add term related blocks. Suite for classic or hybrid theme.
+Add term-related blocks. Suitable for classic or hybrid themes.
 
 ## Description
 
