@@ -2,6 +2,7 @@
 	"name": "taro-taxonomy-blocks",
 	"main": "gulpfile.js",
 	"scripts": {
+		"prepare": "husky",
 		"start": "wp-env start",
 		"update": "wp-env start --update",
 		"stop": "wp-env stop",
@@ -44,6 +45,13 @@
 		"stylelint-config-wordpress": "^17.0.0",
 		"vinyl-named": "^1.1.0",
 		"webpack": "^5.3",
-		"webpack-stream": "^7.0"
+		"webpack-stream": "^7.0",
+		"husky": "^9.1.7",
+		"lint-staged": "^16.2.7"
+	},
+	"lint-staged": {
+		"*.js": "npm run fix:js",
+		"*.scss": "npm run fix:css",
+		"*.php": "composer lint"
 	}
 }
