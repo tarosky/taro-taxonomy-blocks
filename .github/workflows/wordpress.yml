@@ -19,7 +19,7 @@ jobs:
     name: Check JS & CSS syntax
     uses: tarosky/workflows/.github/workflows/npm.yml@main
     with:
-      node_version: 16
+      node_version: 22
       package: package
 
   status-check:
@@ -48,7 +48,7 @@ jobs:
       - name: Install Node
         uses: actions/setup-node@v1
         with:
-          node-version: '16'
+          node-version: '22'
 
       - name: Build Plugin
         run: |
