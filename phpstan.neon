@@ -6,4 +6,3 @@ parameters:
     level: 5
     paths:
         - taro-taxonomy-blocks.php
-        - includes/
