@@ -1,0 +1,25 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Default value of the parameter \#2 \$target \(string\) of function taro_taxonomy_parse_args\(\) is incompatible with type bool\.$#'
+			identifier: parameter.defaultValue
+			count: 1
+			path: taro-taxonomy-blocks.php
+
+		-
+			message: '#^Parameter \#1 \$target of function taro_taxonomy_terms_blocks_option expects string, bool given\.$#'
+			identifier: argument.type
+			count: 1
+			path: taro-taxonomy-blocks.php
+
+		-
+			message: '#^Parameter \#2 \$output of function get_taxonomies expects ''names''\|''objects'', ''OBJECT'' given\.$#'
+			identifier: argument.type
+			count: 1
+			path: taro-taxonomy-blocks.php
+
+		-
+			message: '#^Parameter \#2 \$target of function taro_taxonomy_parse_args expects bool, string given\.$#'
+			identifier: argument.type
+			count: 2
+			path: taro-taxonomy-blocks.php
