@@ -17,23 +17,45 @@
 defined( 'ABSPATH' ) or die();
 
 /**
- * Register assets
+ * Register assets from wp-dependencies.json.
+ */
+function taro_taxonomy_blocks_register_assets() {
+	$json = __DIR__ . '/wp-dependencies.json';
+	if ( ! file_exists( $json ) ) {
+		return;
+	}
+	$dependencies = json_decode( file_get_contents( $json ), true ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+	if ( empty( $dependencies ) ) {
+		return;
+	}
+	$base = trailingslashit( plugin_dir_url( __FILE__ ) );
+	foreach ( $dependencies as $dep ) {
+		if ( empty( $dep['path'] ) ) {
+			continue;
+		}
+		$url = $base . $dep['path'];
+		switch ( $dep['ext'] ) {
+			case 'css':
+				wp_register_style( $dep['handle'], $url, $dep['deps'], $dep['hash'], $dep['media'] );
+				break;
+			case 'js':
+				$footer = [ 'in_footer' => $dep['footer'] ];
+				if ( in_array( $dep['strategy'], [ 'defer', 'async' ], true ) ) {
+					$footer['strategy'] = $dep['strategy'];
+				}
+				wp_register_script( $dep['handle'], $url, $dep['deps'], $dep['hash'], $footer );
+				if ( in_array( 'wp-i18n', $dep['deps'], true ) ) {
+					wp_set_script_translations( $dep['handle'], 'taro-taxonomy-blocks' );
+				}
+				break;
+		}
+	}
+}
+
+/**
+ * Register blocks.
  */
 function taro_taxonomy_blocks_assets() {
-	// Register assets.
-	$data    = get_file_data( __FILE__, [
-		'version' => 'Version',
-	] );
-	$base    = plugin_dir_url( __FILE__ ) . 'dist';
-	$version = $data['version'];
-	wp_register_script( 'taro-taxonomy-selector', $base . '/js/taxonomy-selector.js', [ 'wp-i18n', 'wp-components' ], $version, true );
-	wp_register_script( 'taro-terms-block-editor', $base . '/js/block-terms.js', [ 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-block-editor', 'wp-server-side-render', 'taro-taxonomy-selector' ], $version, true );
-	wp_register_script( 'taro-post-terms-block-editor', $base . '/js/block-posts-terms.js', [ 'wp-i18n', 'wp-blocks', 'wp-components', 'wp-block-editor', 'wp-server-side-render', 'taro-taxonomy-selector' ], $version, true );
-	wp_register_script( 'taro-post-terms-query-block-editor', $base . '/js/block-posts-terms-query.js', [ 'wp-i18n', 'wp-data', 'wp-blocks', 'wp-components', 'wp-block-editor', 'wp-server-side-render', 'taro-taxonomy-selector' ], $version, true );
-	wp_register_style( 'taro-terms-block-editor', $base . '/css/editor-block-terms.css', [], $version );
-	wp_register_style( 'taro-post-terms-block-editor', $base . '/css/editor-block-posts-terms.css', [], $version );
-	wp_register_style( 'taro-terms-block', $base . '/css/style-block-terms.css', [], $version );
-	wp_register_style( 'taro-post-terms-block', $base . '/css/style-block-posts-terms.css', [], $version );
 	// Register blocks.
 	register_block_type( 'taro/terms', [
 		'attributes'      => taro_taxonomy_terms_blocks_option(),
@@ -66,19 +88,15 @@ function taro_taxonomy_blocks_enqueue_editor() {
 		'public' => true,
 	] );
 	$taxonomies = apply_filters( 'taro_taxonomy_blocks_taxonomies', array_values( get_taxonomies( $tax_args, OBJECT ) ) );
-	wp_set_script_translations( 'taro-taxonomy-selector', 'taro-taxonomy-blocks' );
 	wp_localize_script( 'taro-taxonomy-selector', 'TaroTaxonomySelector', [
 		'taxonomies' => $taxonomies,
 	] );
-	wp_set_script_translations( 'taro-terms-block-editor', 'taro-taxonomy-blocks' );
 	wp_localize_script( 'taro-terms-block-editor', 'TaroTermsBlockEditor', [
 		'attributes' => taro_taxonomy_terms_blocks_option(),
 	] );
-	wp_set_script_translations( 'taro-post-terms-block-editor', 'taro-taxonomy-blocks' );
 	wp_localize_script( 'taro-post-terms-block-editor', 'TaroPostTermsBlockEditor', [
 		'attributes' => taro_taxonomy_terms_blocks_option( 'post_terms' ),
 	] );
-	wp_set_script_translations( 'taro-post-terms-query-block-editor', 'taro-taxonomy-blocks' );
 	wp_localize_script( 'taro-post-terms-query-block-editor', 'TaroPostTermsQueryBlockEditor', [
 		'attributes' => taro_taxonomy_terms_blocks_option( 'posts' ),
 	] );
@@ -339,5 +357,6 @@ function taro_taxonomy_blocks_callback_post_terms_query( $attributes = [], $cont
 }
 
 // Register hooks.
+add_action( 'init', 'taro_taxonomy_blocks_register_assets', 10 );
 add_action( 'init', 'taro_taxonomy_blocks_assets', 20 );
 add_action( 'enqueue_block_editor_assets', 'taro_taxonomy_blocks_enqueue_editor', 1 );
