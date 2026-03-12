@@ -1,5 +1,8 @@
 /*!
- * Description
+ * Taxonomy selector component.
+ *
+ * @handle taro-taxonomy-selector
+ * @deps wp-i18n, wp-components
  */
 
 /*global TaroTaxonomySelector: false */

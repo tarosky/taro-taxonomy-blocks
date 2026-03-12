@@ -1,6 +1,8 @@
 /*!
  * Terms block.
  *
+ * @handle taro-terms-block-editor
+ * @deps wp-i18n, wp-blocks, wp-components, wp-block-editor, wp-server-side-render, taro-taxonomy-selector
  */
 
 /* global TaroTermsBlockEditor:false */
