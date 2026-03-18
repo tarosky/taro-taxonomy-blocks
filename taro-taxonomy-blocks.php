@@ -280,7 +280,8 @@ function taro_taxonomy_blocks_callback_post_terms( $attributes = [], $content = 
 	}
 	ob_start();
 	taro_taxonomy_blocks_get_template_part( 'template-parts/taxonomy-blocks/term-list', $taxonomy->name, [
-		'terms' => $terms,
+		'terms'     => $terms,
+		'className' => $attributes['className'],
 	] );
 	$content = ob_get_contents();
 	ob_end_clean();
