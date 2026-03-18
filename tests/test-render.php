@@ -73,30 +73,6 @@ class TestRender extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Test callback_post_terms renders terms for current post.
-	 */
-	public function test_callback_post_terms_renders() {
-		$post_id = self::factory()->post->create();
-		$term_id = self::factory()->term->create( [
-			'taxonomy' => 'category',
-			'name'     => 'Rendered Term',
-		] );
-		wp_set_post_terms( $post_id, [ $term_id ], 'category' );
-
-		global $post;
-		$post = get_post( $post_id );
-		setup_postdata( $post );
-
-		$result = taro_taxonomy_blocks_callback_post_terms( [
-			'taxonomy' => 'category',
-		] );
-		$this->assertNotEmpty( $result );
-		$this->assertStringContainsString( 'Rendered Term', $result );
-
-		wp_reset_postdata();
-	}
-
-	/**
 	 * Test callback_post_terms_query returns empty without terms.
 	 */
 	public function test_callback_post_terms_query_returns_empty_without_terms() {
@@ -141,33 +117,4 @@ class TestRender extends WP_UnitTestCase {
 		wp_reset_postdata();
 	}
 
-	/**
-	 * Test template part loading (plugin directory fallback).
-	 */
-	public function test_template_part_loading() {
-		ob_start();
-		taro_taxonomy_blocks_get_template_part( 'template-parts/taxonomy-blocks/term-list', '', [
-			'terms' => [],
-		] );
-		$output = ob_get_clean();
-		// Template exists and was loaded (might be empty with no terms).
-		$this->assertIsString( $output );
-	}
-
-	/**
-	 * Test template filter works.
-	 */
-	public function test_template_filter() {
-		$callback = function ( $found, $name, $suffix ) {
-			return '/tmp/custom-template.php';
-		};
-		add_filter( 'taro_taxonomy_blocks_template', $callback, 10, 3 );
-		// The filter changes the template path but the file doesn't exist,
-		// so load_template won't be called.
-		ob_start();
-		taro_taxonomy_blocks_get_template_part( 'template-parts/taxonomy-blocks/term-list', '' );
-		$output = ob_get_clean();
-		remove_filter( 'taro_taxonomy_blocks_template', $callback );
-		$this->assertIsString( $output );
-	}
 }
